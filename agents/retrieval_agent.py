@@ -10,7 +10,7 @@ from requests_aws4auth import AWS4Auth
 from sentence_transformers import SentenceTransformer
 from bedrock_client import invoke_claude
 
-standardize_result = standardize_result  # for consistency with sql_agent.py
+# standardize_result = standardize_result  # for consistency with sql_agent.py
 
 
 HOST = "search-vector-search-lesson-4l33if4ozaudfaak5d5bmfw2gi.us-east-1.es.amazonaws.com"
@@ -70,15 +70,61 @@ def check_grounding(answer: str, chunks: list[dict]) -> bool:
     return all(1 <= int(s) <= len(chunks) for s in cited_sources)
 
 
-def run_retrieval_agent(question: str) -> dict:
-    chunks = retrieve(question)
-    if not chunks:
-        return {"success": False, "answer": "No relevant documents found.", "sources": [], "metadata": {"chunk_count": 0, "grounded": False, "token_usage": {"input": 0, "output": 0}}}
+# def run_retrieval_agent(question: str) -> dict:
+#     chunks = retrieve(question)
+#     if not chunks:
+#         return {"success": False, "answer": "No relevant documents found.", "sources": [], "metadata": {"chunk_count": 0, "grounded": False, "token_usage": {"input": 0, "output": 0}}}
 
-    answer, usage = generate_cited_answer(question, chunks)
-    return {
-        "success": True,
-        "answer": answer,
-        "sources": [c["source"] for c in chunks],
-        "metadata": {"chunk_count": len(chunks), "grounded": check_grounding(answer, chunks), "token_usage": usage}
-    }
+#     answer, usage = generate_cited_answer(question, chunks)
+#     return {
+#         "success": True,
+#         "answer": answer,
+#         "sources": [c["source"] for c in chunks],
+#         "metadata": {"chunk_count": len(chunks), "grounded": check_grounding(answer, chunks), "token_usage": usage}
+#     }
+
+
+def run_retrieval_agent(question: str) -> dict:
+    try:
+        chunks = retrieve(question)
+
+        if not chunks:
+            return standardize_result(
+                success=False,
+                answer="No relevant documents found.",
+                sources=[],
+                metadata={
+                    "validation_status": "no_documents",
+                    "chunk_scores": [],
+                    "grounding_checks": {"grounded": False},
+                    "token_usage": {"input": 0, "output": 0},
+                },
+            )
+
+        answer, usage = generate_cited_answer(question, chunks)
+        grounded = check_grounding(answer, chunks)
+
+        return standardize_result(
+            success=True,
+            answer=answer,
+            sources=[chunk["source"] for chunk in chunks],
+            metadata={
+                "validation_status": "passed",
+                "chunk_scores": [chunk["score"] for chunk in chunks],
+                "grounding_checks": {"grounded": grounded},
+                "token_usage": usage,
+            },
+        )
+
+    except Exception as exc:
+        return standardize_result(
+            success=False,
+            answer=f"Retrieval agent failed: {exc}",
+            sources=[],
+            metadata={
+                "validation_status": "execution_error",
+                "chunk_scores": [],
+                "grounding_checks": {"grounded": False},
+                "token_usage": {"input": 0, "output": 0},
+            },
+        )
