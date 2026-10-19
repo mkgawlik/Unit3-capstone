@@ -3,7 +3,7 @@ Real, already-validated retrieval agent (same code tested earlier this
 session against the shared vector-search-lesson OpenSearch domain).
 Recreated here after the local Downloads reset wiped the original files.
 """
-from result_utils import standardize_result
+from .result_utils import standardize_result
 import boto3
 from opensearchpy import OpenSearch, RequestsHttpConnection
 from requests_aws4auth import AWS4Auth

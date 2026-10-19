@@ -139,6 +139,3 @@ if __name__ == "__main__":
         print(f"Route: {result['route']}")
         print(f"Answer: {result['final_answer']}")
         print(f"Tokens: {result['token_usage']}")
-
-
-

@@ -10,8 +10,17 @@ this environment don't have direct Anthropic API keys, so the
 inference-profile ARN pattern below is the only path to Claude Sonnet 4.6
 available here.
 """
+import os
+
 import boto3
 import json
+import tokenomics_logger
+tokenomics_logger.log_claude_call(
+    component=component,
+    input_tokens=result["input_tokens"],
+    output_tokens=result["output_tokens"],
+    model_id=os.getenv("BEDROCK_MODEL_ID"),
+)
 
 bedrock = boto3.client("bedrock-runtime", region_name="us-east-1")
 

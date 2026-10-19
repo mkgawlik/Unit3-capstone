@@ -78,3 +78,13 @@
 {"timestamp": "2026-10-16T11:00:30.921297", "stage": "query_start", "question": "How many active projects do we have, and what's our onboarding policy?", "details": {"trace_id": "db79cb36"}}
 {"timestamp": "2026-10-16T11:00:30.922002", "stage": "routing", "question": "How many active projects do we have, and what's our onboarding policy?", "details": {"route": "both"}}
 {"timestamp": "2026-10-16T11:00:42.958885", "stage": "query_complete", "question": "How many active projects do we have, and what's our onboarding policy?", "details": {"trace_id": "db79cb36", "route": "both", "sql_validation": "PASSED", "retrieval_chunk_count": 5, "token_usage": {"input": 506, "output": 430}}}
+{"timestamp": "2026-10-19T09:36:31.892022", "stage": "query_start", "question": "How many active projects do we have?", "details": {"trace_id": "59509c0c"}}
+{"timestamp": "2026-10-19T09:37:41.200049", "stage": "query_start", "question": "How many active projects do we have?", "details": {"trace_id": "24e3ed15"}}
+{"timestamp": "2026-10-19T09:37:41.202171", "stage": "routing", "question": "How many active projects do we have?", "details": {"route": "sql"}}
+{"timestamp": "2026-10-19T09:37:42.074034", "stage": "query_complete", "question": "How many active projects do we have?", "details": {"trace_id": "24e3ed15", "route": "sql", "sql_validation": null, "retrieval_chunk_count": null, "token_usage": {"input": 0, "output": 0}}}
+{"timestamp": "2026-10-19T09:37:42.074251", "stage": "query_start", "question": "What is our onboarding process?", "details": {"trace_id": "2e3e910e"}}
+{"timestamp": "2026-10-19T09:37:42.075757", "stage": "routing", "question": "What is our onboarding process?", "details": {"route": "retrieval"}}
+{"timestamp": "2026-10-19T09:37:47.817216", "stage": "query_complete", "question": "What is our onboarding process?", "details": {"trace_id": "2e3e910e", "route": "retrieval", "sql_validation": null, "retrieval_chunk_count": 5, "token_usage": {"input": 167, "output": 207}}}
+{"timestamp": "2026-10-19T09:37:47.817480", "stage": "query_start", "question": "How many active projects do we have, and what's our onboarding policy?", "details": {"trace_id": "4c6ed9cd"}}
+{"timestamp": "2026-10-19T09:37:47.818223", "stage": "routing", "question": "How many active projects do we have, and what's our onboarding policy?", "details": {"route": "both"}}
+{"timestamp": "2026-10-19T09:37:56.510195", "stage": "query_complete", "question": "How many active projects do we have, and what's our onboarding policy?", "details": {"trace_id": "4c6ed9cd", "route": "both", "sql_validation": null, "retrieval_chunk_count": 5, "token_usage": {"input": 328, "output": 362}}}
